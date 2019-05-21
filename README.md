@@ -1,4 +1,4 @@
-# MASI
+# MASI [![Build Status](https://travis-ci.com/lodz-university-of-technology-masi/Green.svg?branch=master)](https://travis-ci.com/lodz-university-of-technology-masi/Green)
 
 ## Green team members
 - Filip Pietrusiak,

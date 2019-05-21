@@ -1,0 +1,22 @@
+language: java
+jdk:
+    - oraclejdk8
+
+node_js: 
+    - "10"
+
+jdk:
+    - openjdk8
+
+install:
+    - npm install npm@latest -g
+
+script:
+  - cd MASI-Back
+  - mvn install package spring-boot:repackage
+  - cd ../MASI-Front
+  - npm cache clean --force
+  - npm install --update-binary --no-shrinkwrap
+  - rm package-lock.json
+  - npm i
+  - npm run-script build
