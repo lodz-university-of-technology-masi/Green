@@ -1,4 +1,4 @@
-package masi_green.tools;
+package green.tools;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
