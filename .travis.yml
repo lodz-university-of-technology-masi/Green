@@ -13,7 +13,8 @@ install:
 
 script:
   - cd MASI-Back
-  - mvn install package spring-boot:repackage
+  - mvn validate
+  - mvn compile
   - cd ../MASI-Front
   - npm cache clean --force
   - npm install --update-binary --no-shrinkwrap
