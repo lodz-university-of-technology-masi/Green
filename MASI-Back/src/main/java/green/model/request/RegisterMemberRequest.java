@@ -1,19 +1,18 @@
 package green.model.request;
 
 import com.google.gson.annotations.SerializedName;
-import lombok.Getter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
-public class RegisterMemberRequest {
-
-	@Getter
+@Data
+@AllArgsConstructor
+public class RegisterMemberRequest extends BaseRequest {
 	@SerializedName("login")
 	private String login;
 
-	@Getter
 	@SerializedName("password")
 	private String password;
 
-	@Getter
 	@SerializedName("name")
 	private String name;
 }

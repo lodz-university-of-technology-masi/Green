@@ -5,7 +5,7 @@ import green.entity.Role;
 import green.entity.Session;
 import green.model.request.LoginMemberRequest;
 import green.model.request.RegisterMemberRequest;
-import green.model.response.BaseObjectResponse;
+import green.model.response.BaseResponse;
 import green.model.response.LoginMemberResponse;
 import green.repository.MemberRepository;
 import green.repository.RoleRepository;
@@ -13,6 +13,8 @@ import green.repository.SessionRepository;
 import green.tools.Tools;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -30,18 +32,14 @@ public class MemberManager {
 	RoleRepository roleRepository;
 
 	@SuppressWarnings("rawtypes")
-	public BaseObjectResponse registerUser(RegisterMemberRequest request) {
-		final BaseObjectResponse response = new BaseObjectResponse();
-		if(StringUtils.isBlank(request.getLogin()) || StringUtils.isBlank(request.getPassword()) || StringUtils.isBlank(request.getName())) {
-			response.setCode(400);
-			response.setMessage("Some of the required fields are empty!");
-			return response;
+	public ResponseEntity<BaseResponse> registerUser(RegisterMemberRequest request) {
+		if(StringUtils.isBlank(request.getLogin()) || StringUtils.isBlank(request.getPassword()) || StringUtils.isBlank(request.getName())){
+			return new ResponseEntity(new BaseResponse("Some of the required fields are empty!"), HttpStatus.BAD_REQUEST);
 		}
 		final Role role = roleRepository.findById(1);
 		final Member check = memberRepository.findByLogin(request.getLogin());
 		if(check != null) {
-			response.setCode(400);
-			response.setMessage("This login is already used!");
+			return new ResponseEntity(new BaseResponse("This login is already used!"), HttpStatus.BAD_REQUEST);
 		} else {
 			final Member member = new Member();
 			member.setLogin(request.getLogin());
@@ -50,19 +48,18 @@ public class MemberManager {
 			member.setActive(true);
 			member.setRole(role);
 			memberRepository.save(member);
-
-			response.setCode(201);
-			response.setMessage("Created");
+			return new ResponseEntity(new BaseResponse("Created"), HttpStatus.CREATED);
 		}
-		return response;
 	}
 	
-	public BaseObjectResponse<LoginMemberResponse> login(LoginMemberRequest request) {
-		final BaseObjectResponse<LoginMemberResponse> response = new BaseObjectResponse();
+	public ResponseEntity<LoginMemberResponse> login(LoginMemberRequest request) {
+	    LoginMemberResponse body = new LoginMemberResponse();
+	    HttpStatus status;
 		if(StringUtils.isBlank(request.getLogin()) || StringUtils.isBlank(request.getPassword())) {
-			response.setCode(400);
-			response.setMessage("Some of the required fields are empty!");
-			return response;
+		    status = HttpStatus.BAD_REQUEST;
+		    body.setMessage("Some of the required fields are empty!");
+		    body.setSessionToken(null);
+		    return new ResponseEntity(body, status);
 		}
 		final Member member = memberRepository.findByLoginAndPassword(request.getLogin(), Tools.generateMD5(request.getPassword()));
 		if(member != null) {
@@ -72,16 +69,14 @@ public class MemberManager {
 			session.setToken(token);
 			session.setAddDate(new Timestamp(System.currentTimeMillis()));
 			sessionRepository.save(session);
-			
-			final LoginMemberResponse loginMemberResponse = new LoginMemberResponse(token);
-			response.setCode(200);
-			response.setMessage("OK");
-			response.setResponse(loginMemberResponse);
+			status = HttpStatus.OK;
+            body.setMessage("OK");
+			body.setSessionToken(token);
 		} else {
-			response.setCode(400);
-			response.setMessage("Credentials are incorrect!");
+            status = HttpStatus.BAD_REQUEST;
+			body.setMessage("Credentials are incorrect!");
+			body.setSessionToken(null);
 		}
-		
-		return response;
+		return new ResponseEntity(body, status);
 	}
 }
