@@ -1,0 +1,95 @@
+<div *ngIf="userRole === 'RED'">
+  <button mat-button (click)="newTest()">Add Test</button>
+</div>
+<mat-accordion>
+  <span *ngFor="let test of testList; let testID = index;">
+      <mat-expansion-panel *ngFor="let version of test.versions ; let versionID = index;">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+       {{test.name}}
+      </mat-panel-title>
+      <mat-panel-description>
+       <span>Position:  {{test.position}}</span> <span style="margin-left: 15px">Redactor:  {{test.redactor}}</span>  <span style="margin-left: 15px">Language: {{version.language}}</span>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+        <div>
+          <button mat-button (click)="saveChanges(test)">Save Changes</button>
+        </div>
+        <div>
+          <button mat-button (click)="removeTest(test)">Remove Test</button>
+        </div>
+        <div  *ngIf="userRole === 'MOD'">
+            <mat-form-field>
+              <mat-label>Change Position</mat-label>
+              <mat-select [(ngModel)]="test.position" >
+                <mat-option *ngFor="let position of positionList" [value]="position.name">
+                  {{position.name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+        </div>
+        <div>
+          <button mat-button (click)="addQuestion(version.questions)">Add Question</button>
+        </div>
+<span *ngFor="let question of version.questions; let i = index;">
+   <div>{{i+1}}.
+     <span [ngSwitch]="question.type">
+       <span *ngSwitchCase="'OPEN'"> Open type question</span>
+       <span *ngSwitchCase="'CHOOSE'"> Choose type question</span>
+       <span *ngSwitchCase="'SCALE'"> Scale type question</span>
+       <span *ngSwitchCase="'NUMBER'"> Number type question</span>
+       <span *ngSwitchDefault>Unknown type question</span>
+    </span>
+     <span>
+       <button mat-button (click)="editQuestion(question, i, testID, versionID)">Edit Question</button>
+     </span>
+     <span *ngIf="userRole === 'MOD'">
+        <button mat-button (click)="deleteQuestion(version, i)">Delete Question</button>
+     </span>
+   </div>
+      <span [ngSwitch]="question.type">
+        <span *ngSwitchCase="'OPEN'">
+           <mat-form-field style="width: 800px;">
+           <textarea matInput cdkTextareaAutosize [(ngModel)]="question.description"
+                     [disabled]="true" value="{{question.description}}"></textarea>
+           </mat-form-field>
+        </span>
+        <span *ngSwitchCase="'CHOOSE'">
+          <mat-form-field style="width: 800px;">
+             <textarea matInput cdkTextareaAutosize [(ngModel)]="question.description"
+                     [disabled]="true" value="{{question.description}}"></textarea>
+          </mat-form-field>
+          <div>
+            <mat-radio-group [disabled]="true" aria-label="Select an option">
+              <mat-radio-button *ngFor="let option of question.options" value="option">{{option}}</mat-radio-button>
+            </mat-radio-group>
+          </div>
+        </span>
+        <span *ngSwitchCase="'SCALE'">
+           <mat-form-field style="width: 800px;">
+           <textarea matInput cdkTextareaAutosize [(ngModel)]="question.description"
+                     [disabled]="true" value="{{question.description}}"></textarea>
+           </mat-form-field>
+          <div>
+            <mat-form-field style="width: 80px;">
+              <input  [disabled]="true" matInput placeholder="MIN" value="{{question.scale[0]}}">
+           </mat-form-field>
+          <mat-form-field style="width: 80px;">
+              <input  [disabled]="true" matInput placeholder="MAX" value="{{question.scale[1]}}">
+           </mat-form-field>
+          </div>
+        </span>
+        <span *ngSwitchCase="'NUMBER'">
+           <mat-form-field style="width: 800px;">
+           <textarea matInput cdkTextareaAutosize [(ngModel)]="question.description"
+                     [disabled]="true" value="{{question.description}}"></textarea>
+           </mat-form-field>
+        </span>
+        <span *ngSwitchDefault> <input  [disabled]="true" matInput placeholder="Error"></span>
+      </span>
+
+</span>
+  </mat-expansion-panel>
+
+  </span>
+</mat-accordion>

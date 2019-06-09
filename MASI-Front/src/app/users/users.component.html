@@ -1,0 +1,21 @@
+<div>
+  <mat-grid-list cols="4" rowHeight="4:1" role="listitem">
+    <mat-grid-tile >Name</mat-grid-tile>
+    <mat-grid-tile >Email</mat-grid-tile>
+    <mat-grid-tile >Role</mat-grid-tile>
+    <mat-grid-tile >Actions</mat-grid-tile>
+  </mat-grid-list>
+  <br>
+    <mat-grid-list cols="4" rowHeight="4:1"  *ngFor="let user of userList" role="listitem">
+        <mat-grid-tile >{{user.name}}</mat-grid-tile>
+        <mat-grid-tile >{{user.email}}</mat-grid-tile>
+        <mat-grid-tile  [ngSwitch]="user.role">
+          <span *ngSwitchCase="'MOD'">Moderator</span>
+          <span *ngSwitchCase="'RED'">Redactor</span>
+          <span *ngSwitchDefault>Candidate</span>
+        </mat-grid-tile>
+        <mat-grid-tile ><button *ngIf="user.role!== 'MOD'" mat-button (click)="EditUser(user)">Edit</button></mat-grid-tile>
+
+  </mat-grid-list>
+</div>
+

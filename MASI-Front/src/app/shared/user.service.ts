@@ -11,11 +11,9 @@ export class UserService {
 
   registerUser(user: User) {
     const body: User = {
-      UserName: user.UserName,
-      Password: user.Password,
-      Email: user.Email,
-      FirstName: user.FirstName,
-      LastName: user.LastName
+      name: user.name,
+      password: user.password,
+      email: user.email,
     };
     const reqHeader = new HttpHeaders({'No-Auth': 'True'});
     return this.http.post(this.rootUrl + '/api/User/Register', body, { headers : reqHeader});
@@ -24,11 +22,16 @@ export class UserService {
   userAuthentication(userName, password) {
     const data = 'username=' + userName + '&password=' + password + '&grant_type=password';
     const reqHeader = new HttpHeaders({ 'Content-Type': 'application/x-www-urlencoded', 'No-Auth': 'True' });
-    return this.http.post(this.rootUrl + '/token', data, { headers: reqHeader });
+    return this.http.post(this.rootUrl + '/api/User/Login', data, { headers: reqHeader });
   }
 
   getUserClaims() {
-   return  this.http.get(this.rootUrl + '/api/GetUserClaims');
+   return  this.http.get(this.rootUrl + '/api/User/GetUserClaims');
   }
-
+  changeLanguage(data) {
+   return  this.http.put(this.rootUrl + '/api/User/Language', data);
+  }
+  editUser(user) {
+    return this.http.put(this.rootUrl + '/api/User/mod', user);
+  }
 }

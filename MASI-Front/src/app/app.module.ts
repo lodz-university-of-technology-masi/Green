@@ -1,52 +1,121 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule} from '@angular/forms';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { RouterModule } from '@angular/router';
-import { ScrollingModule } from '@angular/cdk/scrolling';
+import { MyMaterialModule } from  './material.module';
+import { RouterModule, Routes } from '@angular/router';
 
 import { AppComponent } from './app.component';
-import { UserService } from './shared/user.service';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { ToastrModule } from 'ngx-toastr';
-import { UserComponent } from './user/user.component';
-import { SignInComponent } from './user/sign-in/sign-in.component';
-import { HomeComponent } from './home/home.component';
-import { SignUpComponent } from './user/sign-up/sign-up.component';
-import { appRoutes } from './routes';
-import { AuthGuard } from './auth/auth.guard';
-import { AuthInterceptor } from './auth/auth.interceptor';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {RegisterUserToast, RegistrationComponentComponent} from './registration-component/registration-component.component';
+import { LoginComponentComponent } from './login-component/login-component.component';
+import {TESTSComponent} from './tests/tests.component';
+import {ChangeStatusToast, POSITIONSComponent} from './positions/positions.component';
+import {USERSComponent} from './users/users.component';
+import {UserService} from './shared/user.service';
+import {ModService} from './shared/mod.service';
+import {AuthGuard} from './auth/auth.guard';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import {AuthInterceptor} from './auth/auth.interceptor';
 import {fakeBackendProvider} from './shared/FakeBackendInterceptor';
-import {MatExpansionModule} from '@angular/material/expansion';
-import {AngularFireDatabase} from '@angular/fire/database';
+import { ToastrModule } from 'ngx-toastr';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {
+  MatButtonModule,
+  MatCheckboxModule, MatDialogModule,
+  MatExpansionModule,
+  MatGridListModule,
+  MatOptionModule,
+  MatSelectModule, MatSnackBarModule
+} from '@angular/material';
+import {HomeComponent} from './home/home.component';
+import { MainPageComponent } from './main-page/main-page.component';
+import { EditUserDialogComponent } from './edit-user-dialog/edit-user-dialog.component';
+import {PositionService} from './shared/position.service';
+import { AddPositionDialogComponent } from './add-position-dialog/add-position-dialog.component';
+import {TestsService} from './shared/tests.service';
+import { EditQuestionComponent } from './edit-question/edit-question.component';
+import { AddQuestionComponent } from './add-question/add-question.component';
+import { AddTestDialogComponent } from './add-test-dialog/add-test-dialog.component';
+import { CandidatePanelComponent } from './candidate-panel/candidate-panel.component';
+
+
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    SignUpComponent,
-    UserComponent,
-    SignInComponent,
+    RegistrationComponentComponent,
+    LoginComponentComponent,
+    USERSComponent,
+    POSITIONSComponent,
+    TESTSComponent,
     HomeComponent,
+    MainPageComponent,
+    EditUserDialogComponent,
+    ChangeStatusToast,
+    RegisterUserToast,
+    AddPositionDialogComponent,
+    EditQuestionComponent,
+    AddQuestionComponent,
+    AddTestDialogComponent,
+    CandidatePanelComponent,
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
+    ReactiveFormsModule,
+    MyMaterialModule,
     FormsModule,
     HttpClientModule,
-    ToastrModule.forRoot(),
-    BrowserAnimationsModule,
     MatExpansionModule,
-    RouterModule.forRoot(appRoutes),
-    ScrollingModule
+    MatButtonModule,
+    MatCheckboxModule,
+    MatOptionModule,
+    MatSelectModule,
+    MatGridListModule,
+    MatDialogModule,
+    MatSnackBarModule,
+    ToastrModule.forRoot(),
+    RouterModule.forRoot([
+      { path: 'main', component: MainPageComponent, children: [{
+        path: 'home', component: HomeComponent, canActivate: [AuthGuard],
+          children: [
+            { path: 'users', component: USERSComponent},
+            { path: 'positions', component: POSITIONSComponent},
+            { path: 'tests', component: TESTSComponent},
+            { path: 'candidatePanel', component: CandidatePanelComponent}
+          ]
+        },
+          { path: 'register', component: RegistrationComponentComponent },
+          { path: 'login', component: LoginComponentComponent },
+        ] },
+      { path: '', redirectTo: 'main', pathMatch: 'full' },
+
+    ]),
+
   ],
-  providers: [UserService, AuthGuard,
+  entryComponents: [
+    EditUserDialogComponent,
+    AddPositionDialogComponent,
+    ChangeStatusToast,
+    RegisterUserToast,
+    EditQuestionComponent,
+    AddQuestionComponent,
+    AddTestDialogComponent
+  ],
+  providers: [
+    UserService,
+    ModService,
+    PositionService,
+    AuthGuard,
+    TestsService,
     {
       provide : HTTP_INTERCEPTORS,
       useClass : AuthInterceptor,
       multi : true
     },
     fakeBackendProvider,
-    AngularFireDatabase
-    ],
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+

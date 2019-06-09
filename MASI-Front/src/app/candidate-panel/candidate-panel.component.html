@@ -1,0 +1,87 @@
+<mat-accordion>
+  <span *ngFor="let test of testList">
+    <span *ngFor="let version of test.versions">
+      <span *ngIf="version.language === userLanguage">
+        <mat-expansion-panel >
+      <mat-expansion-panel-header>
+      <mat-panel-title>
+       {{test.name}}
+      </mat-panel-title>
+      <mat-panel-description>
+       <span>Position:  {{test.position}}</span>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+<span *ngFor="let question of version.questions; let i = index;">
+   <div>{{i+1}}.
+     <span [ngSwitch]="question.type">
+       <span *ngSwitchCase="'OPEN'"> Open type question</span>
+       <span *ngSwitchCase="'CHOOSE'"> Choose type question</span>
+       <span *ngSwitchCase="'SCALE'"> Scale type question</span>
+       <span *ngSwitchCase="'NUMBER'"> Number type question</span>
+       <span *ngSwitchDefault>Unknown type question</span>
+    </span>
+   </div>
+      <span [ngSwitch]="question.type">
+        <span *ngSwitchCase="'OPEN'">
+           <mat-form-field style="width: 800px;">
+           <textarea matInput cdkTextareaAutosize
+                     [disabled]="true" value="{{question.description}}"></textarea>
+           </mat-form-field>
+          <mat-form-field style="width: 800px;" >
+             <mat-label>text answer</mat-label>
+           <textarea matInput cdkTextareaAutosize [(ngModel)]="question.answer"
+                     value="{{question.answer}}"></textarea>
+           </mat-form-field>
+        </span>
+        <span *ngSwitchCase="'CHOOSE'">
+          <mat-form-field style="width: 800px;">
+             <textarea matInput cdkTextareaAutosize
+                       [disabled]="true" value="{{question.description}}"></textarea>
+          </mat-form-field>
+          <div>
+            <mat-radio-group aria-label="Select an option" [(ngModel)]="question.answer">
+              <mat-radio-button *ngFor="let option of question.options" value="{{option}}">{{option}}</mat-radio-button>
+            </mat-radio-group>
+          </div>
+        </span>
+        <span *ngSwitchCase="'SCALE'">
+           <mat-form-field style="width: 800px;">
+           <textarea matInput cdkTextareaAutosize
+                     [disabled]="true" value="{{question.description}}"></textarea>
+           </mat-form-field>
+          <div>
+            <mat-form-field style="width: 80px;">
+              <input  [disabled]="true" matInput placeholder="MIN" value="{{question.scale[0]}}">
+           </mat-form-field>
+          <mat-form-field style="width: 80px;">
+              <input  [disabled]="true" matInput placeholder="MAX" value="{{question.scale[1]}}">
+           </mat-form-field>
+            <mat-form-field style="width: 300px;">
+              <mat-label>Numeric answer</mat-label>
+              <input   matInput  [(ngModel)]="question.answer">
+           </mat-form-field>
+          </div>
+        </span>
+        <span *ngSwitchCase="'NUMBER'">
+           <mat-form-field style="width: 800px;">
+           <textarea matInput cdkTextareaAutosize
+                     [disabled]="true" value="{{question.description}}"></textarea>
+           </mat-form-field>
+          <mat-form-field  style="display: block; width:300px">
+            <mat-label>Numeric answer</mat-label>
+             <input matInput [(ngModel)]="question.answer">
+         </mat-form-field>
+        </span>
+        <span *ngSwitchDefault> <input  [disabled]="true" matInput placeholder="Error"></span>
+      </span>
+
+</span>
+<button mat-button (click)="Submit(test)">Submit</button>
+
+  </mat-expansion-panel>
+      </span>
+    </span>
+
+  </span>
+</mat-accordion>

@@ -1,0 +1,44 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+   <a mat-button href="/">Home</a>
+    <span class="spacer"></span>
+    <a *ngIf="userClaims"  mat-button (click)="ShowHideProfileDetails()">Profile</a>
+    <a  mat-button  routerLink="register">Register</a>
+    <a  mat-button  routerLink="login">Login</a>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<mat-card *ngIf="showDetails" style=" position: absolute; right: 10px;">
+  <mat-card-header>
+    <mat-card-title>Profile Details</mat-card-title>
+    <mat-card-subtitle> {{userClaims.name}}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <p>
+      <span>Email : {{userClaims.email}}</span>
+      <br>
+      <span [ngSwitch]="userClaims.role">
+            <span *ngSwitchCase="'MOD'">Role : Moderator</span>
+            <span *ngSwitchCase="'RED'">Role : Redactor</span>
+            <span *ngSwitchDefault>Role : Candidate</span>
+          </span>
+      <br>
+      <br>
+      <mat-form-field>
+        <mat-label>Language</mat-label>
+        <mat-select [(ngModel)]="currentLang"  (selectionChange)="Language($event)">
+          <mat-option *ngFor="let lang of languages" [value]="lang.key">
+            {{lang.show}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </p>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-button (click)="Logout()">Logout</button>
+  </mat-card-actions>
+</mat-card>
+
+
+<router-outlet></router-outlet>

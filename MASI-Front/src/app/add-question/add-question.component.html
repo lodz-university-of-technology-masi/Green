@@ -1,0 +1,56 @@
+<h1 mat-dialog-title>Add Question</h1>
+<div mat-dialog-content>
+  <mat-form-field>
+    <mat-label>Type</mat-label>
+    <mat-select [(ngModel)]="data.type" >
+      <mat-option *ngFor="let type of options" [value]="type.key">
+        {{type.show}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field style="width: 700px;">
+    <mat-label>Description</mat-label>
+    <textarea matInput cdkTextareaAutosize [formControl]="descFormControl"
+    ></textarea>
+  </mat-form-field>
+  <span [ngSwitch]="data.type">
+       <span *ngSwitchCase="'OPEN'"></span>
+       <span *ngSwitchCase="'CHOOSE'">
+         <br>
+         <mat-form-field style="display: block">
+             <mat-label>Answer 1</mat-label>
+             <input matInput [(ngModel)]="data.options[0]">
+           </mat-form-field>
+         <mat-form-field style="display: block">
+             <mat-label>Answer 2</mat-label>
+             <input matInput [(ngModel)]="data.options[1]">
+           </mat-form-field>
+         <mat-form-field style="display: block">
+             <mat-label>Answer 3</mat-label>
+             <input matInput [(ngModel)]="data.options[2]">
+           </mat-form-field>
+         <mat-form-field style="display: block">
+             <mat-label>Answer 4</mat-label>
+             <input matInput [(ngModel)]="data.options[3]">
+         </mat-form-field>
+       </span>
+       <span *ngSwitchCase="'SCALE'">
+         <br>
+       <mat-form-field style="display: block">
+             <mat-label>Min Threshold</mat-label>
+             <input matInput [(ngModel)]="data.scale[0]">
+           </mat-form-field>
+         <mat-form-field style="display: block">
+             <mat-label>Max Threshold</mat-label>
+             <input matInput [(ngModel)]="data.scale[1]">
+           </mat-form-field>
+       </span>
+       <span *ngSwitchCase="'NUMBER'"></span>
+       <span *ngSwitchDefault></span>
+  </span>
+
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button mat-button [mat-dialog-close]="{data: data, description: descFormControl.value}" cdkFocusInitial>Save</button>
+</div>
