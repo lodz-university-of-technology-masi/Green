@@ -36,6 +36,7 @@ import { EditQuestionComponent } from './edit-question/edit-question.component';
 import { AddQuestionComponent } from './add-question/add-question.component';
 import { AddTestDialogComponent } from './add-test-dialog/add-test-dialog.component';
 import { CandidatePanelComponent } from './candidate-panel/candidate-panel.component';
+import {TranslatePipe} from './shared/TranslatePipe';
 
 
 
@@ -58,6 +59,7 @@ import { CandidatePanelComponent } from './candidate-panel/candidate-panel.compo
     AddQuestionComponent,
     AddTestDialogComponent,
     CandidatePanelComponent,
+    TranslatePipe
   ],
   imports: [
     BrowserModule,

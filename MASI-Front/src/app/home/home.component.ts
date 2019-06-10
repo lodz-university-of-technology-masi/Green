@@ -1,8 +1,7 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from '../shared/user.service';
-import {ModService} from "../shared/mod.service";
-
+import {ModService} from '../shared/mod.service';
 
 @Component({
   selector: 'app-home',
@@ -18,7 +17,7 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     if (localStorage.getItem('role') !== '') {
       this.role = localStorage.getItem(('role'));
-    }
-    }
 
+    }
+  }
 }

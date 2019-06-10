@@ -1,5 +1,13 @@
 <div *ngIf="userRole === 'RED'">
   <button mat-button (click)="newTest()">Add Test</button>
+  <mat-form-field style="width: 200px;">
+    <input  matInput placeholder="wiki search" [(ngModel)]="searchTextWiki">
+  </mat-form-field>
+  <button mat-button (click)="searchWiki()">Search in Wikipedia</button>
+  <mat-form-field style="width: 200px;">
+    <input  matInput placeholder="thesaurus search" [(ngModel)]="searchTextSynonym">
+  </mat-form-field>
+  <button mat-button (click)="searchSynonym()">Search for Synonym</button>
 </div>
 <mat-accordion>
   <span *ngFor="let test of testList; let testID = index;">
@@ -12,6 +20,16 @@
        <span>Position:  {{test.position}}</span> <span style="margin-left: 15px">Redactor:  {{test.redactor}}</span>  <span style="margin-left: 15px">Language: {{version.language}}</span>
       </mat-panel-description>
     </mat-expansion-panel-header>
+
+        <div>
+          <button mat-button (click)="addVersion(test)">Add version</button>
+          <button mat-button (click)="addVersionTrans(test)">Add version and Translate</button>
+          <mat-select [(ngModel)]="currentLang" style="width: 100px" >
+            <mat-option *ngFor="let lang of languages" [value]="lang.key">
+              {{lang.show}}
+            </mat-option>
+          </mat-select>
+        </div>
         <div>
           <button mat-button (click)="saveChanges(test)">Save Changes</button>
         </div>

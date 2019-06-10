@@ -44,8 +44,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
           name: 'Jon Snow',
           email: 'JonSnow@gmail.com',
           token: 2,
-          role: 'MOD',
-          language: 'ENG'
+          role: 'RED',
+          language: 'POL'
         };
         return of(new HttpResponse({status: 200, body: data}));
       }
@@ -105,7 +105,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                   {
                   type: 'CHOOSE',
                   description: 'Who else is involved in this decision?',
-                  options: ['a', 'b', 'c', 'd'],
+                  options: ['answer a', 'answer b', 'answer c', 'answer d'],
                     answer: ''
                 },
                   {
@@ -137,7 +137,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                   {
                   type: 'CHOOSE',
                   description: 'Who else is involved in this decision?',
-                  options: ['a', 'b', 'c', 'd'],
+                    options: ['answer a', 'answer b', 'answer c', 'answer d'],
                     answer: ''
                 },
                   {
@@ -162,7 +162,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                   {
                     type: 'CHOOSE',
                     description: 'Who else is involved in this decision?',
-                    options: ['a', 'b', 'c', 'd'],
+                    options: ['answer a', 'answer b', 'answer c', 'answer d'],
                     answer: ''
                   },
                   {

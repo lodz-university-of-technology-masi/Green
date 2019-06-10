@@ -6,6 +6,9 @@ import {EditQuestionComponent} from '../edit-question/edit-question.component';
 import {PositionService} from '../shared/position.service';
 import {AddQuestionComponent} from '../add-question/add-question.component';
 import {AddTestDialogComponent} from '../add-test-dialog/add-test-dialog.component';
+import {TranslatePipe} from '../shared/TranslatePipe';
+import translate, { setCORS } from "google-translate-api-browser";
+setCORS("http://cors-anywhere.herokuapp.com/");
 
 @Component({
   selector: 'masi-tests',
@@ -17,8 +20,13 @@ export class TESTSComponent implements OnInit {
   testList: any;
   positionList;
   tmpType = 'OPEN';
-  tmpName = 'Test name'
-  constructor(private testsService: TestsService, private postionService: PositionService, private _snackBar: MatSnackBar, public dialog: MatDialog) { }
+  tmpName = 'Test name';
+  searchTextWiki = '';
+  searchTextSynonym = '';
+  languages = [{key: 'ENG', show: 'English'}, {key: 'POL', show: 'Polish'}];
+  currentLang = 'ENG';
+  constructor(private testsService: TestsService,
+              private postionService: PositionService, private _snackBar: MatSnackBar, public dialog: MatDialog) { }
   ngOnInit() {
     if (localStorage.getItem('role') !== '') {
       this.userRole = localStorage.getItem('role');
@@ -36,7 +44,8 @@ export class TESTSComponent implements OnInit {
     }));
   }
   editQuestion(question, index, testID, versionID) {
-    let data = {test: testID, version: versionID, id: index, type: question.type, description: question.description, scale: [0, 0], options: ['', '', '', '' ]};
+    let data = {test: testID, version: versionID, id: index, type: question.type,
+      description: question.description, scale: [0, 0], options: ['', '', '', '' ]};
     if(question.scale)
       data.scale = question.scale
     if(question.options)
@@ -51,7 +60,8 @@ export class TESTSComponent implements OnInit {
     });
   }
   saveChanges(test) {
-    console.log(test);
+    console.log('test');
+    // console.log(this.pipe.transform('test'));
   }
   deleteQuestion(test, questionID) {
     test.questions = test.questions.filter((item, i) => i !== questionID);
@@ -75,6 +85,14 @@ export class TESTSComponent implements OnInit {
     this.testList = this.testList.filter(t => t !== test);
   }
 
+  searchWiki() {
+    const win = window.open('https://pl.wikipedia.org/wiki/Special:Search?search=' + this.searchTextWiki, '_blank');
+    win.focus();
+  }
+  searchSynonym() {
+    const win = window.open('https://www.thesaurus.com/browse/' + this.searchTextSynonym, '_blank');
+    win.focus();
+  }
   newTest() {
     let data = {name: this.tmpName};
     const dialogRef = this.dialog.open(AddTestDialogComponent, {
@@ -88,4 +106,28 @@ export class TESTSComponent implements OnInit {
       });
     });
   }
+
+  addVersion(test: any) {
+    const newVersion = {...test.versions.filter(v => v.language === 'ENG' )[0]};
+    newVersion.language = this.currentLang;
+    test.versions.push(newVersion);
+  }
+  addVersionTrans(test: any) {
+    const newVersion: any =  new Object;
+    let translationShort = 'en';
+    if (this.currentLang === 'POL')
+      translationShort = 'pl';
+    const questions = JSON.parse(JSON.stringify(test.versions.filter(v => v.language === 'ENG' )[0].questions))
+      newVersion.language = this.currentLang;
+      newVersion.questions = questions;
+      newVersion.questions.map(question => { translate(question.description, { to: translationShort }).then((res: any) =>
+      {return question.description = res.text})});
+      // newVersion.questions.filter(question => question.type === 'CHOOSE' )
+      //   .map(question => question.options.map(option => { translate(option,
+      //     { to: translationShort }).then((res: any) =>
+      // { return option = res.text})} ))
+    test.versions.push(newVersion);
+  }
+
+
 }
