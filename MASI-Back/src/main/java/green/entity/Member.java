@@ -1,5 +1,6 @@
 package green.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,7 +12,7 @@ import java.util.List;
 @Data
 @Entity
 @Table(name="member")
-@NamedQuery(name="ApplicationUser.findAll", query="SELECT a FROM Member a")
+@NamedQuery(name="Member.findAll", query="SELECT a FROM Member a")
 public class Member implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -25,10 +26,9 @@ public class Member implements Serializable {
 
 	private String name;
 
+	@JsonIgnore
 	private String password;
 
-	@ManyToOne
-	@JoinColumn(name="role_id")
 	private Role role;
 
 	@OneToMany(mappedBy="member")

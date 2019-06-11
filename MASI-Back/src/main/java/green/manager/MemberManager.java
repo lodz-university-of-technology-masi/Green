@@ -6,9 +6,9 @@ import green.entity.Session;
 import green.model.request.LoginMemberRequest;
 import green.model.request.RegisterMemberRequest;
 import green.model.response.BaseResponse;
+import green.model.response.GetAllResponse;
 import green.model.response.LoginMemberResponse;
 import green.repository.MemberRepository;
-import green.repository.RoleRepository;
 import green.repository.SessionRepository;
 import green.tools.Tools;
 import org.apache.commons.lang3.StringUtils;
@@ -18,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 @Service
 public class MemberManager {
@@ -28,15 +29,11 @@ public class MemberManager {
 	@Autowired
 	SessionRepository sessionRepository;
 
-	@Autowired
-	RoleRepository roleRepository;
-
 	@SuppressWarnings("rawtypes")
 	public ResponseEntity<BaseResponse> registerUser(RegisterMemberRequest request) {
 		if(StringUtils.isBlank(request.getLogin()) || StringUtils.isBlank(request.getPassword()) || StringUtils.isBlank(request.getName())){
 			return new ResponseEntity(new BaseResponse("Some of the required fields are empty!"), HttpStatus.BAD_REQUEST);
 		}
-		final Role role = roleRepository.findById(1);
 		final Member check = memberRepository.findByLogin(request.getLogin());
 		if(check != null) {
 			return new ResponseEntity(new BaseResponse("This login is already used!"), HttpStatus.BAD_REQUEST);
@@ -46,7 +43,7 @@ public class MemberManager {
 			member.setPassword(Tools.generateMD5(request.getPassword()));
 			member.setName(request.getName());
 			member.setActive(true);
-			member.setRole(role);
+			member.setRole(Role.Candidate);
 			memberRepository.save(member);
 			return new ResponseEntity(new BaseResponse("Created"), HttpStatus.CREATED);
 		}
@@ -78,5 +75,13 @@ public class MemberManager {
 			body.setSessionToken(null);
 		}
 		return new ResponseEntity(body, status);
+	}
+
+	public ResponseEntity<GetAllResponse<Member>> getAllMembers()
+	{
+		GetAllResponse body = new GetAllResponse();
+		body.setMessage("OK");
+		body.setList(memberRepository.findAll());
+		return new ResponseEntity(body, HttpStatus.OK);
 	}
 }

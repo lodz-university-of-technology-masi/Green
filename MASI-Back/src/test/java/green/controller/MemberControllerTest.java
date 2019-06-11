@@ -1,11 +1,9 @@
 package green.controller;
 
-import ch.qos.logback.core.encoder.EchoEncoder;
 import green.model.request.LoginMemberRequest;
 import green.model.request.RegisterMemberRequest;
 import green.model.response.BaseResponse;
 import green.model.response.LoginMemberResponse;
-import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -20,7 +18,6 @@ import org.springframework.http.ResponseEntity;
 import java.net.URI;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 public class MemberControllerTest {

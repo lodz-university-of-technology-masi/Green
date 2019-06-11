@@ -1,5 +1,6 @@
 package green.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -25,6 +26,7 @@ public class Session implements Serializable {
 
 	private String token;
 
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="member_id")
 	private Member member;
