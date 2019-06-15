@@ -37,6 +37,7 @@ import { AddQuestionComponent } from './add-question/add-question.component';
 import { AddTestDialogComponent } from './add-test-dialog/add-test-dialog.component';
 import { CandidatePanelComponent } from './candidate-panel/candidate-panel.component';
 import {TranslatePipe} from './shared/TranslatePipe';
+import {MeasurementProvider} from './shared/MeasurementProvider';
 
 
 
@@ -59,7 +60,8 @@ import {TranslatePipe} from './shared/TranslatePipe';
     AddQuestionComponent,
     AddTestDialogComponent,
     CandidatePanelComponent,
-    TranslatePipe
+    TranslatePipe,
+    MeasurementProvider,
   ],
   imports: [
     BrowserModule,
@@ -120,4 +122,3 @@ import {TranslatePipe} from './shared/TranslatePipe';
   bootstrap: [AppComponent]
 })
 export class AppModule { }
-
