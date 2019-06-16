@@ -61,7 +61,6 @@ import {MeasurementProvider} from './shared/MeasurementProvider';
     AddTestDialogComponent,
     CandidatePanelComponent,
     TranslatePipe,
-    MeasurementProvider,
   ],
   imports: [
     BrowserModule,
@@ -107,6 +106,7 @@ import {MeasurementProvider} from './shared/MeasurementProvider';
     AddTestDialogComponent
   ],
   providers: [
+    MeasurementProvider,
     UserService,
     ModService,
     PositionService,
