@@ -29,7 +29,7 @@ public class TestControllerTest {
         green.entity.Test body = new green.entity.Test();
         body.setName("Test");
         body.setRedactor_id(1);
-        RequestEntity<green.entity.Test> request = RequestEntity.post(new URI("http://localhost:" + port + "/api/position")).accept(MediaType.APPLICATION_JSON).body(body);
+        RequestEntity<green.entity.Test> request = RequestEntity.post(new URI("http://localhost:" + port + "/api/test")).accept(MediaType.APPLICATION_JSON).body(body);
         ResponseEntity<green.entity.Test> response = restTemplate.exchange(request, green.entity.Test.class);
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
         assertEquals(body.getRedactor_id(), response.getBody().getRedactor_id());
