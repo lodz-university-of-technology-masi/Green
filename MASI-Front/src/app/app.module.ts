@@ -38,7 +38,7 @@ import { AddTestDialogComponent } from './add-test-dialog/add-test-dialog.compon
 import { CandidatePanelComponent } from './candidate-panel/candidate-panel.component';
 import {TranslatePipe} from './shared/TranslatePipe';
 import {MeasurementProvider} from './shared/MeasurementProvider';
-
+import { HotkeyModule } from 'angular2-hotkeys';
 
 
 
@@ -77,6 +77,7 @@ import {MeasurementProvider} from './shared/MeasurementProvider';
     MatGridListModule,
     MatDialogModule,
     MatSnackBarModule,
+    HotkeyModule.forRoot(),
     ToastrModule.forRoot(),
     RouterModule.forRoot([
       { path: 'main', component: MainPageComponent, children: [{

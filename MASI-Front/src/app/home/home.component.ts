@@ -18,8 +18,9 @@ export class HomeComponent implements OnInit {
   
   public constructor(private router: Router, private userService: UserService, private _hotkeysService: HotkeysService, private _measurementProvider: MeasurementProvider) {
     this._hotkeysService.add(new Hotkey('shift+d', (event: KeyboardEvent): boolean => {
-      alert("po");
-      this._measurementProvider.Measure;
+      var ret = this._measurementProvider.Measure();
+      if(ret)
+        alert(ret);
       return false;
     }));
     this._hotkeysService.add(new Hotkey('shift+w', (event: KeyboardEvent): boolean => {
@@ -45,6 +46,6 @@ export class HomeComponent implements OnInit {
 
   @HostListener('document:click', ['$event'])
     documentClick(event: MouseEvent) {
-        this._measurementProvider.Clicked;
+        this._measurementProvider.Clicked();
     }
 }
