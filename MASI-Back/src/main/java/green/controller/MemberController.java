@@ -10,10 +10,7 @@ import green.model.response.LoginMemberResponse;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class MemberController {
@@ -38,4 +35,9 @@ public class MemberController {
     public ResponseEntity<GetAllResponse<Member>> getAllMembers() {
         return memberManager.getAllMembers();
     }
+
+    @ApiOperation(value="Get Member", consumes = "application/json")
+    @GetMapping(value = "api/member/{token}")
+    public ResponseEntity<Member> getMember(@PathVariable("token") String token)
+    { return memberManager.getMember(token); }
 }

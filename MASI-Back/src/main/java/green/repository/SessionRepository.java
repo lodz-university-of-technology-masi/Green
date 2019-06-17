@@ -14,5 +14,5 @@ import javax.transaction.Transactional;
 public interface SessionRepository extends JpaRepository<Session, Integer> {
 
 	@Query("SELECT s FROM Session s WHERE s.token = :token")
-    Session findByToken(@Param("token") String token, Sort sort);
+    Session findByToken(@Param("token") String token);
 }

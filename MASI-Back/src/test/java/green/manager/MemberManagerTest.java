@@ -35,7 +35,7 @@ public class MemberManagerTest {
         when(memberRepository.findByLoginAndPassword(null, null)).thenReturn(null);
 
         when(sessionRepository.findById(null)).thenReturn(null);
-        when(sessionRepository.findByToken(null, null)).thenReturn(null);
+        when(sessionRepository.findByToken(null)).thenReturn(null);
     }
 
     @Test
