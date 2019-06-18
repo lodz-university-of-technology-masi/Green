@@ -8,12 +8,12 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Data
 @Entity
-@Table(name="test")
-@NamedQuery(name="Test.findAll", query="SELECT t FROM Test t")
+@Table(name = "test")
+@NamedQuery(name = "Test.findAll", query = "SELECT t FROM Test t")
 public class Test {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     private String name;

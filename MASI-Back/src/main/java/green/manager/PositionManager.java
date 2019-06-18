@@ -16,56 +16,42 @@ public class PositionManager {
     @Autowired
     PositionRepository positionRepository;
 
-    public ResponseEntity<GetAllResponse<Position>> getAllPositions()
-    {
+    public ResponseEntity<GetAllResponse<Position>> getAllPositions() {
         GetAllResponse body = new GetAllResponse();
         body.setMessage("OK");
         body.setList(positionRepository.findAll());
         return new ResponseEntity(body, HttpStatus.OK);
     }
 
-    public ResponseEntity<Position> createPosition(Position position)
-    {
+    public ResponseEntity<Position> createPosition(Position position) {
         position = positionRepository.save(position);
         return new ResponseEntity(position, HttpStatus.CREATED);
     }
 
-    public ResponseEntity<Position> updatePosition(Position position)
-    {
+    public ResponseEntity<Position> updatePosition(Position position) {
         Optional<Position> old = positionRepository.findById(position.getId());
-        if(old.isPresent())
-        {
+        if (old.isPresent()) {
             return createPosition(position);
-        }
-        else
-        {
+        } else {
             return new ResponseEntity(null, HttpStatus.BAD_REQUEST);
         }
     }
 
-    public ResponseEntity<Position> getPosition(Integer id)
-    {
+    public ResponseEntity<Position> getPosition(Integer id) {
         Optional<Position> position = positionRepository.findById(id);
-        if(position.isPresent())
-        {
+        if (position.isPresent()) {
             return new ResponseEntity(position.get(), HttpStatus.OK);
-        }
-        else
-        {
+        } else {
             return new ResponseEntity(null, HttpStatus.BAD_REQUEST);
         }
     }
 
-    public ResponseEntity<String> deletePosition(Integer id)
-    {
+    public ResponseEntity<String> deletePosition(Integer id) {
         Optional<Position> position = positionRepository.findById(id);
-        if(position.isPresent())
-        {
+        if (position.isPresent()) {
             positionRepository.deleteById(id);
             return new ResponseEntity("OK", HttpStatus.OK);
-        }
-        else
-        {
+        } else {
             return new ResponseEntity("This position does not exists!", HttpStatus.BAD_REQUEST);
         }
     }

@@ -28,7 +28,7 @@ public class MemberManagerTest {
     MemberManager memberManager = new MemberManager();
 
     @Before(value = "test")
-    public void setMockOutput(){
+    public void setMockOutput() {
         when(memberRepository.findById(null)).thenReturn(null);
         when(memberRepository.findAll()).thenReturn(null);
         when(memberRepository.findByLogin(null)).thenReturn(null);
@@ -40,7 +40,7 @@ public class MemberManagerTest {
 
     @Test
     public void test() throws Exception {
-        LoginMemberRequest request = new LoginMemberRequest("","");
+        LoginMemberRequest request = new LoginMemberRequest("", "");
         ResponseEntity<LoginMemberResponse> response = memberManager.login(request);
         assertEquals(new ResponseEntity(new LoginMemberResponse(null), HttpStatus.BAD_REQUEST), response);
     }

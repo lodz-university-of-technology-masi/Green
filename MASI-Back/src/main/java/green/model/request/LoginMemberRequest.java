@@ -7,9 +7,9 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class LoginMemberRequest extends BaseRequest {
-	@SerializedName("login")
-	private String login;
+    @SerializedName("login")
+    private String login;
 
-	@SerializedName("password")
-	private String password;
+    @SerializedName("password")
+    private String password;
 }

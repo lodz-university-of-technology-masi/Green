@@ -16,56 +16,42 @@ public class TestManager {
     @Autowired
     TestRepository testRepository;
 
-    public ResponseEntity<GetAllResponse<Test>> getAllTests()
-    {
+    public ResponseEntity<GetAllResponse<Test>> getAllTests() {
         GetAllResponse body = new GetAllResponse();
         body.setMessage("OK");
         body.setList(testRepository.findAll());
         return new ResponseEntity(body, HttpStatus.OK);
     }
 
-    public ResponseEntity<Test> createTest(Test test)
-    {
+    public ResponseEntity<Test> createTest(Test test) {
         test = testRepository.save(test);
         return new ResponseEntity(test, HttpStatus.CREATED);
     }
 
-    public ResponseEntity<Test> updateTest(Test test)
-    {
+    public ResponseEntity<Test> updateTest(Test test) {
         Optional<Test> old = testRepository.findById(test.getId());
-        if(old.isPresent())
-        {
+        if (old.isPresent()) {
             return createTest(test);
-        }
-        else
-        {
+        } else {
             return new ResponseEntity(null, HttpStatus.BAD_REQUEST);
         }
     }
 
-    public ResponseEntity<Test> getTest(Integer id)
-    {
+    public ResponseEntity<Test> getTest(Integer id) {
         Optional<Test> test = testRepository.findById(id);
-        if(test.isPresent())
-        {
+        if (test.isPresent()) {
             return new ResponseEntity(test.get(), HttpStatus.OK);
-        }
-        else
-        {
+        } else {
             return new ResponseEntity(null, HttpStatus.BAD_REQUEST);
         }
     }
 
-    public ResponseEntity<String> deleteTest(Integer id)
-    {
+    public ResponseEntity<String> deleteTest(Integer id) {
         Optional<Test> test = testRepository.findById(id);
-        if(test.isPresent())
-        {
+        if (test.isPresent()) {
             testRepository.deleteById(id);
             return new ResponseEntity("OK", HttpStatus.OK);
-        }
-        else
-        {
+        } else {
             return new ResponseEntity("This position does not exists!", HttpStatus.BAD_REQUEST);
         }
     }

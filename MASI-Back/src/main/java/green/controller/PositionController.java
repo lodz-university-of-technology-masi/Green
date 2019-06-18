@@ -14,31 +14,31 @@ public class PositionController {
     @Autowired
     PositionManager positionManager;
 
-    @ApiOperation(value="Get All Positions", consumes = "application/json")
+    @ApiOperation(value = "Get All Positions", consumes = "application/json")
     @GetMapping(value = "api/position")
     public ResponseEntity<GetAllResponse<Position>> getAllPositions() {
         return positionManager.getAllPositions();
     }
 
-    @ApiOperation(value="Get Position", consumes = "application/json")
+    @ApiOperation(value = "Get Position", consumes = "application/json")
     @GetMapping(value = "api/position/{id}")
     public ResponseEntity<Position> getPosition(@PathVariable("id") Integer id) {
         return positionManager.getPosition(id);
     }
 
-    @ApiOperation(value="Create Position", consumes = "application/json")
+    @ApiOperation(value = "Create Position", consumes = "application/json")
     @PostMapping(value = "api/position")
     public ResponseEntity<Position> createPosition(@RequestBody Position position) {
         return positionManager.createPosition(position);
     }
 
-    @ApiOperation(value="Update Positions", consumes = "application/json")
+    @ApiOperation(value = "Update Positions", consumes = "application/json")
     @PutMapping(value = "api/position/{id}")
     public ResponseEntity<Position> updatePosition(@PathVariable("id") Integer id, @RequestBody Position position) {
         return positionManager.updatePosition(position);
     }
 
-    @ApiOperation(value="Delete Positions", consumes = "application/json")
+    @ApiOperation(value = "Delete Positions", consumes = "application/json")
     @DeleteMapping(value = "api/position/{id}")
     public ResponseEntity<String> deletePosition(@PathVariable("id") Integer id) {
         return positionManager.deletePosition(id);

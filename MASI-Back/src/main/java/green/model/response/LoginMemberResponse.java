@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class LoginMemberResponse extends BaseResponse {
-	@SerializedName("session_token")
-	private String sessionToken;
+    @SerializedName("session_token")
+    private String sessionToken;
 }

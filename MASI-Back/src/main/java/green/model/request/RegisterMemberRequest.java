@@ -7,12 +7,12 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class RegisterMemberRequest extends BaseRequest {
-	@SerializedName("login")
-	private String login;
+    @SerializedName("login")
+    private String login;
 
-	@SerializedName("password")
-	private String password;
+    @SerializedName("password")
+    private String password;
 
-	@SerializedName("name")
-	private String name;
+    @SerializedName("name")
+    private String name;
 }
