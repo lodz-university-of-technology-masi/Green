@@ -42,7 +42,7 @@ public class MemberManagerTest {
     public void test() throws Exception {
         LoginMemberRequest request = new LoginMemberRequest("", "");
         ResponseEntity<LoginMemberResponse> response = memberManager.login(request);
-        assertEquals(new ResponseEntity(new LoginMemberResponse(null), HttpStatus.BAD_REQUEST), response);
+        assertEquals(new ResponseEntity(new LoginMemberResponse(null, null), HttpStatus.BAD_REQUEST), response);
     }
 
 }

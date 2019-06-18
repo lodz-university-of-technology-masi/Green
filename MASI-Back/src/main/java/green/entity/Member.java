@@ -31,6 +31,9 @@ public class Member implements Serializable {
 
     private Role role;
 
+    private Language language;
+
+    @JsonIgnore
     @OneToMany(mappedBy = "member")
     private List<Session> sessions;
 

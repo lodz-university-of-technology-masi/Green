@@ -11,4 +11,7 @@ import lombok.NoArgsConstructor;
 public class LoginMemberResponse extends BaseResponse {
     @SerializedName("session_token")
     private String sessionToken;
+
+    @SerializedName("user_id")
+    private Integer user_id;
 }

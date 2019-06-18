@@ -3,10 +3,12 @@ package green.manager;
 import green.entity.Member;
 import green.entity.Role;
 import green.entity.Session;
+import green.model.request.CreateMemberRequest;
 import green.model.request.LoginMemberRequest;
 import green.model.request.RegisterMemberRequest;
+import green.model.request.UpdateMemberRequest;
 import green.model.response.BaseResponse;
-import green.model.response.GetAllResponse;
+import green.model.response.ListResponse;
 import green.model.response.LoginMemberResponse;
 import green.repository.MemberRepository;
 import green.repository.SessionRepository;
@@ -43,6 +45,7 @@ public class MemberManager {
             member.setName(request.getName());
             member.setActive(true);
             member.setRole(Role.Candidate);
+            member.setLanguage(request.getLanguage());
             memberRepository.save(member);
             return new ResponseEntity(new BaseResponse("Created"), HttpStatus.CREATED);
         }
@@ -68,28 +71,94 @@ public class MemberManager {
             status = HttpStatus.OK;
             body.setMessage("OK");
             body.setSessionToken(token);
+            body.setUser_id(member.getId());
         } else {
             status = HttpStatus.BAD_REQUEST;
             body.setMessage("Credentials are incorrect!");
             body.setSessionToken(null);
+            body.setUser_id(null);
         }
         return new ResponseEntity(body, status);
     }
 
-    public ResponseEntity<GetAllResponse<Member>> getAllMembers() {
-        GetAllResponse body = new GetAllResponse();
+    public ResponseEntity<ListResponse<Member>> getAllMembers(String token) {
+        ListResponse body = new ListResponse();
         body.setMessage("OK");
         body.setList(memberRepository.findAll());
         return new ResponseEntity(body, HttpStatus.OK);
     }
 
-    public ResponseEntity<Member> getMember(String token) {
+    public ResponseEntity<Member> getMember(String token, Integer id) {
         Session session = sessionRepository.findByToken(token);
-        if (session != null && session.getMember() != null) {
-            Member body = session.getMember();
-            return new ResponseEntity(body, HttpStatus.OK);
-        } else {
-            return new ResponseEntity(null, HttpStatus.BAD_REQUEST);
+        ResponseEntity<Member> response = new ResponseEntity(null, HttpStatus.BAD_REQUEST);
+        if (session != null) {
+            Member member = session.getMember();
+            if (member.getId() == id) {
+                response = new ResponseEntity(member, HttpStatus.OK);
+            }
+            else if (member.getRole() == Role.Moderator) {
+                Member body = memberRepository.getOne(id);
+                if (body != null) {
+                    response = new ResponseEntity(body, HttpStatus.OK);
+                }
+            }
         }
+        return response;
+    }
+
+    public ResponseEntity<Member> createMember(String token, CreateMemberRequest request) {
+        Session session = sessionRepository.findByToken(token);
+        ResponseEntity<Member> response = new ResponseEntity(null, HttpStatus.BAD_REQUEST);
+        if (session != null && Tools.isSessionValid(session)) {
+            Member member = session.getMember();
+            if (member.getRole() == Role.Moderator) {
+                Member newMember = new Member();
+                newMember.setId(null);
+                newMember.setActive(request.isActive());
+                newMember.setName(request.getName());
+                newMember.setPassword(request.getPassword());
+                newMember.setLanguage(request.getLanguage());
+                newMember.setRole(request.getRole());
+                newMember.setLogin(request.getLogin());
+                newMember = memberRepository.save(newMember);
+                response = new ResponseEntity(newMember, HttpStatus.OK);
+            }
+        }
+        return response;
+    }
+
+    public ResponseEntity<Member> updateMember(String token, UpdateMemberRequest request) {
+        Session session = sessionRepository.findByToken(token);
+        ResponseEntity<Member> response = new ResponseEntity(null, HttpStatus.BAD_REQUEST);
+        if (session != null && Tools.isSessionValid(session)) {
+            Member member = session.getMember();
+            if (member.getRole() == Role.Moderator || member.getId() == request.getId()) {
+                Member updatedMember = member;
+                updatedMember.setId(request.getId());
+                updatedMember.setActive(request.isActive());
+                updatedMember.setName(request.getName());
+                updatedMember.setPassword(request.getPassword());
+                updatedMember.setLanguage(request.getLanguage());
+                updatedMember.setRole(request.getRole());
+                updatedMember.setLogin(request.getLogin());
+                updatedMember = memberRepository.save(updatedMember);
+                response = new ResponseEntity(updatedMember, HttpStatus.OK);
+            }
+        }
+        return response;
+    }
+
+    public ResponseEntity<BaseResponse> deleteMember(String token, Integer id)
+    {
+        Session session = sessionRepository.findByToken(token);
+        ResponseEntity<BaseResponse> response = new ResponseEntity(new BaseResponse("Bad request!"), HttpStatus.BAD_REQUEST);
+        if (session != null && Tools.isSessionValid(session)) {
+            Member member = session.getMember();
+            if (member.getRole() == Role.Moderator || member.getId() == id) {
+                memberRepository.delete(memberRepository.getOne(id));
+                response = new ResponseEntity("Deleted.", HttpStatus.OK);
+            }
+        }
+        return response;
     }
 }

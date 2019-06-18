@@ -2,7 +2,7 @@ package green.controller;
 
 import green.entity.Position;
 import green.manager.PositionManager;
-import green.model.response.GetAllResponse;
+import green.model.response.ListResponse;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +16,7 @@ public class PositionController {
 
     @ApiOperation(value = "Get All Positions", consumes = "application/json")
     @GetMapping(value = "api/position")
-    public ResponseEntity<GetAllResponse<Position>> getAllPositions() {
+    public ResponseEntity<ListResponse<Position>> getAllPositions() {
         return positionManager.getAllPositions();
     }
 

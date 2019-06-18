@@ -1,7 +1,7 @@
 package green.manager;
 
 import green.entity.Position;
-import green.model.response.GetAllResponse;
+import green.model.response.ListResponse;
 import green.repository.PositionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,8 +16,8 @@ public class PositionManager {
     @Autowired
     PositionRepository positionRepository;
 
-    public ResponseEntity<GetAllResponse<Position>> getAllPositions() {
-        GetAllResponse body = new GetAllResponse();
+    public ResponseEntity<ListResponse<Position>> getAllPositions() {
+        ListResponse body = new ListResponse();
         body.setMessage("OK");
         body.setList(positionRepository.findAll());
         return new ResponseEntity(body, HttpStatus.OK);

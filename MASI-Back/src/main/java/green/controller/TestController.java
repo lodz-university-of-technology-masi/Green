@@ -2,7 +2,7 @@ package green.controller;
 
 import green.entity.Test;
 import green.manager.TestManager;
-import green.model.response.GetAllResponse;
+import green.model.response.ListResponse;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +16,7 @@ public class TestController {
 
     @ApiOperation(value = "Get All Tests", consumes = "application/json")
     @GetMapping(value = "api/test")
-    public ResponseEntity<GetAllResponse<Test>> getAllTests() {
+    public ResponseEntity<ListResponse<Test>> getAllTests() {
         return testManager.getAllTests();
     }
 

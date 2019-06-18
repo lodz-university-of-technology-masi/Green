@@ -1,5 +1,6 @@
 package green.controller;
 
+import green.entity.Language;
 import green.model.request.LoginMemberRequest;
 import green.model.request.RegisterMemberRequest;
 import green.model.response.BaseResponse;
@@ -46,7 +47,7 @@ public class MemberControllerTest {
 
     @Test
     public void registerMemberEmptyFields() throws Exception {
-        RegisterMemberRequest body = new RegisterMemberRequest("", "", "");
+        RegisterMemberRequest body = new RegisterMemberRequest("", "", "", Language.EN);
         ResponseEntity<BaseResponse> response = testRegister(body);
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
         assertEquals("Some of the required fields are empty!", response.getBody().getMessage());
@@ -54,7 +55,7 @@ public class MemberControllerTest {
 
     @Test
     public void registerMemberUsernameAlreadyUsed() throws Exception {
-        RegisterMemberRequest body = new RegisterMemberRequest("login", "password", "name");
+        RegisterMemberRequest body = new RegisterMemberRequest("login", "password", "name", Language.EN);
         ResponseEntity<BaseResponse> response = testRegister(body);
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
         assertEquals("Created", response.getBody().getMessage());
@@ -62,7 +63,7 @@ public class MemberControllerTest {
 
     @Test
     public void registerMemberSuccess() throws Exception {
-        RegisterMemberRequest body = new RegisterMemberRequest("login", "password", "name");
+        RegisterMemberRequest body = new RegisterMemberRequest("login", "password", "name", Language.EN);
         ResponseEntity<BaseResponse> response = testRegister(body);
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
         assertEquals("This login is already used!", response.getBody().getMessage());

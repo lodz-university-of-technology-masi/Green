@@ -1,7 +1,7 @@
 package green.manager;
 
 import green.entity.Test;
-import green.model.response.GetAllResponse;
+import green.model.response.ListResponse;
 import green.repository.TestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,8 +16,8 @@ public class TestManager {
     @Autowired
     TestRepository testRepository;
 
-    public ResponseEntity<GetAllResponse<Test>> getAllTests() {
-        GetAllResponse body = new GetAllResponse();
+    public ResponseEntity<ListResponse<Test>> getAllTests() {
+        ListResponse body = new ListResponse();
         body.setMessage("OK");
         body.setList(testRepository.findAll());
         return new ResponseEntity(body, HttpStatus.OK);
