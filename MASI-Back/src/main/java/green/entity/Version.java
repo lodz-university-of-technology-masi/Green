@@ -9,29 +9,24 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 @Entity
-@Table(name = "test")
-@NamedQuery(name = "Test.findAll", query = "SELECT t FROM Test t")
-public class Test {
-
+@Table(name = "version")
+@NamedQuery(name = "Version.findAll", query = "SELECT t FROM Version t")
+public class Version {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String name;
-
-    @ManyToOne
-    @JoinColumn(name = "position_id")
-    private Position position;
+    private Language language;
 
     @OneToMany(mappedBy = "id")
-    private List<Member> redactors;
+    private List<QuestionOpen> openQuestions;
 
     @OneToMany(mappedBy = "id")
-    private List<Member> candidates;
+    private List<QuestionScale> scaleQuestions;
 
     @OneToMany(mappedBy = "id")
-    private List<Version> versions;
+    private List<QuestionNumber> numberQuestions;
 
     @OneToMany(mappedBy = "id")
-    private List<Attempt> attempts;
+    private List<QuestionChoose> chooseQuestions;
 }
