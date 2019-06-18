@@ -17,5 +17,9 @@ public class Position {
 
     private String name;
 
+    private String description;
+
+    private Language language;
+
     private boolean active;
 }
