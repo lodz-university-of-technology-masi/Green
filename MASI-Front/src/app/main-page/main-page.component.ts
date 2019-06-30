@@ -20,9 +20,9 @@ export class MainPageComponent implements OnInit {
     router.events.subscribe((val) => {
       if (val instanceof RoutesRecognized && val.urlAfterRedirects === '/main') {
         if (localStorage.getItem('userToken') !== '') {
-          this.userService.getUserClaims().subscribe((data: any) => {
-            this.userClaims = data;
-            this.currentLang = data.language;
+          this.userService.getUserClaims(localStorage.getItem('name')).subscribe((data: any) => {
+            this.userClaims = data.response;
+            this.currentLang = data.response.language;
             localStorage.setItem('language', this.userClaims.language);
             localStorage.setItem('role', this.userClaims.role);
             localStorage.setItem('name', this.userClaims.name);
@@ -35,7 +35,7 @@ export class MainPageComponent implements OnInit {
 
   ngOnInit() {
     if (localStorage.getItem('userToken') !== '') {
-      this.userService.getUserClaims().subscribe((data: any) => {
+      this.userService.getUserClaims(localStorage.getItem('name')).subscribe((data: any) => {
         this.userClaims = data;
         localStorage.setItem('language', this.userClaims.language);
         localStorage.setItem('role', this.userClaims.role);
@@ -60,9 +60,8 @@ export class MainPageComponent implements OnInit {
 
   Language(lang) {
     const newLang = lang.value;
-    this.userService.changeLanguage({language: newLang, id: localStorage.getItem('userToken')}).subscribe((data: any) => {
+    this.userService.changeLanguage({language: newLang, name: localStorage.getItem('name')}).subscribe((data: any) => {
       localStorage.setItem('language', newLang);
-      console.log(localStorage.getItem('language'));
     });
   }
 }

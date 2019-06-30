@@ -19,8 +19,9 @@ export class LoginComponentComponent implements OnInit {
     this.createForm();
   }
   OnSubmit(form) {
-    this.userService.userAuthentication(form.value.email, form.value.pass).subscribe((data: any) => {
-        localStorage.setItem('userToken', data.token);
+    this.userService.userAuthentication(form.value.name, form.value.password).subscribe((data: any) => {
+        localStorage.setItem('userToken', 'logged');
+        localStorage.setItem('name', form.value.name);
         this.router.navigate(['/']);
       },
       (err: HttpErrorResponse) => {
@@ -29,7 +30,7 @@ export class LoginComponentComponent implements OnInit {
   }
   createForm() {
     this.formGroup = this.formBuilder.group({
-      'email': [null, [Validators.required]],
+      'name': [null, [Validators.required]],
       'password': [null, [Validators.required]],
       'validate': ''
     });

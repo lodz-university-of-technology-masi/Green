@@ -14,8 +14,8 @@ import {UserService} from './shared/user.service';
 import {ModService} from './shared/mod.service';
 import {AuthGuard} from './auth/auth.guard';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
-import {AuthInterceptor} from './auth/auth.interceptor';
-import {fakeBackendProvider} from './shared/FakeBackendInterceptor';
+// import {AuthInterceptor} from './auth/auth.interceptor';
+// import {fakeBackendProvider} from './shared/FakeBackendInterceptor';
 import { ToastrModule } from 'ngx-toastr';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {
@@ -113,12 +113,12 @@ import { HotkeyModule } from 'angular2-hotkeys';
     PositionService,
     AuthGuard,
     TestsService,
-    {
-      provide : HTTP_INTERCEPTORS,
-      useClass : AuthInterceptor,
-      multi : true
-    },
-    fakeBackendProvider,
+    // {
+    //   provide : HTTP_INTERCEPTORS,
+    //   useClass : AuthInterceptor,
+    //   multi : true
+    // },
+    // fakeBackendProvider,
   ],
   bootstrap: [AppComponent]
 })

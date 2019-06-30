@@ -40,5 +40,11 @@
   </mat-card-actions>
 </mat-card>
 
+<div *ngIf="showDetails" style="width: calc(100vw - 230px);">
+  <router-outlet></router-outlet>
+</div>
 
-<router-outlet></router-outlet>
+<div *ngIf="!showDetails" >
+  <router-outlet></router-outlet>
+</div>
+

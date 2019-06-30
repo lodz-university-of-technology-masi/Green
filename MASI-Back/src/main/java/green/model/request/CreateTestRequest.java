@@ -1,31 +1,49 @@
 package green.model.request;
 
 import com.google.gson.annotations.SerializedName;
-import green.entity.Language;
-import green.entity.Role;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import green.dto.VersionDto;
+import green.entity.Version;
 
-@NoArgsConstructor
-@Data
-@AllArgsConstructor
+import java.util.List;
+
+
 public class CreateTestRequest {
-    @SerializedName("active")
-    private Boolean active;
-
-    @SerializedName("login")
-    private String login;
 
     @SerializedName("name")
     private String name;
 
-    @SerializedName("password")
-    private String password;
+    @SerializedName("candidate")
+    private String candidate;
 
-    @SerializedName("role")
-    private Role role;
+    @SerializedName("redactor")
+    private String redactor;
 
-    @SerializedName("language")
-    private Language language;
+    @SerializedName("position")
+    private String position;
+
+    @SerializedName("versions")
+    private List<VersionDto> versions;
+
+    public CreateTestRequest() {
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getCandidate() {
+        return candidate;
+    }
+
+    public String getRedactor() {
+        return redactor;
+    }
+
+    public String getPosition() {
+        return position;
+    }
+
+    public List<VersionDto> getVersions() {
+        return versions;
+    }
 }

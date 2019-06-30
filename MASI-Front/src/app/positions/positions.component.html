@@ -1,11 +1,13 @@
 <div>
-  <mat-grid-list cols="2" rowHeight="6:1" role="listitem">
+  <mat-grid-list cols="3" rowHeight="5:1" role="listitem">
     <mat-grid-tile >Name</mat-grid-tile>
+    <mat-grid-tile >Description</mat-grid-tile>
     <mat-grid-tile >is Active</mat-grid-tile>
   </mat-grid-list>
   <br>
-  <mat-grid-list cols="2" rowHeight="6:1"  *ngFor="let position of positionList" role="listitem">
+  <mat-grid-list cols="3" rowHeight="5:1"  *ngFor="let position of positionList" role="listitem">
     <mat-grid-tile >{{position.name}}</mat-grid-tile>
+    <mat-grid-tile >{{position.description}}</mat-grid-tile>
     <mat-grid-tile >
       <mat-checkbox [(ngModel)]="position.active" (change)="changeStatus($event, position)">
 choose status    </mat-checkbox>
@@ -13,7 +15,8 @@ choose status    </mat-checkbox>
     <br>
   </mat-grid-list>
   <br>
-  <mat-grid-list cols="2" rowHeight="6:1" role="listitem">
+  <mat-grid-list cols="3" rowHeight="5:1" role="listitem">
+    <mat-grid-tile></mat-grid-tile>
     <mat-grid-tile></mat-grid-tile>
     <mat-grid-tile ><button mat-button (click)="AddPosition()">Add</button></mat-grid-tile>
   </mat-grid-list>

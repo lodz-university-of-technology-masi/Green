@@ -6,14 +6,20 @@ import {User} from '../models/User.model';
 
 @Injectable()
 export class TestsService {
-  readonly rootUrl = 'http://localhost:35257';
+  readonly rootUrl = '/api';
   constructor(private http: HttpClient) { }
 
   getAllTests() {
-    return  this.http.get(this.rootUrl + '/api/tests/getAll');
+    return  this.http.get(this.rootUrl + '/test/getAll');
   }
 
-  saveChanges(test){
-    return this.http.put(this.rootUrl + '/api/tests/mod', test);
+  addTest(data) {
+    const reqHeader = new HttpHeaders({'Content-Type': 'application/json', 'No-Auth': 'True'});
+    return this.http.post(this.rootUrl + '/test/add', data, { headers : reqHeader});
+  }
+
+  saveChanges(data) {
+    const reqHeader = new HttpHeaders({'Content-Type': 'application/json', 'No-Auth': 'True'});
+    return this.http.put(this.rootUrl + '/test/edit', data, { headers : reqHeader});
   }
 }

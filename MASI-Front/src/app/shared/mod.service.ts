@@ -6,12 +6,11 @@ import {User} from '../models/User.model';
 
 @Injectable()
 export class ModService {
-  readonly rootUrl = 'http://localhost:35257';
+  readonly rootUrl = '/api';
   constructor(private http: HttpClient) { }
 
-  getAllUsers(){
-    return  this.http.get(this.rootUrl + '/api/User/getAll');
+  getAllUsers() {
+    return  this.http.get(this.rootUrl + '/member/getAll');
   }
-
 
 }

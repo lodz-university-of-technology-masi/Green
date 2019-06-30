@@ -51,7 +51,7 @@ export class RegistrationComponentComponent implements OnInit {
   OnSubmit(form) {
     this.userService.registerUser(form.value)
       .subscribe((data: any) => {
-        if (data.Succeeded === true) {
+        if (data.message === 'OK') {
           this._snackBar.openFromComponent(RegisterUserToast, {
             duration: 5 * 1000,
           });

@@ -53,7 +53,8 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "registration-login-angular-material:build"
+            "browserTarget": "registration-login-angular-material:build",
+            "port" : 6063
           },
           "configurations": {
             "production": {
@@ -129,5 +130,5 @@
       }
     }
   },
-  "defaultProject": "registration-login-angular-material"
+  "defaultProject": "masi"
 }

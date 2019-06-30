@@ -8,6 +8,9 @@
     <input  matInput placeholder="thesaurus search" [(ngModel)]="searchTextSynonym">
   </mat-form-field>
   <button mat-button (click)="searchSynonym()">Search for Synonym</button>
+  <div>
+      <input  type="file" (change)="onFileSelect($event.target)" >
+  </div>
 </div>
 <mat-accordion>
   <span *ngFor="let test of testList; let testID = index;">
@@ -20,7 +23,6 @@
        <span>Position:  {{test.position}}</span> <span style="margin-left: 15px">Redactor:  {{test.redactor}}</span>  <span style="margin-left: 15px">Language: {{version.language}}</span>
       </mat-panel-description>
     </mat-expansion-panel-header>
-
         <div>
           <button mat-button (click)="addVersion(test)">Add version</button>
           <button mat-button (click)="addVersionTrans(test)">Add version and Translate</button>
@@ -79,7 +81,10 @@
           </mat-form-field>
           <div>
             <mat-radio-group [disabled]="true" aria-label="Select an option">
-              <mat-radio-button *ngFor="let option of question.options" value="option">{{option}}</mat-radio-button>
+<!--              <mat-radio-button *ngFor="let option of question.options" value="option">{{option}}</mat-radio-button>-->
+              <mat-radio-button value="question.option1">{{question.option1}}</mat-radio-button>
+              <mat-radio-button value="question.option2">{{question.option2}}</mat-radio-button>
+              <mat-radio-button value="question.option3">{{question.option3}}</mat-radio-button>
             </mat-radio-group>
           </div>
         </span>
@@ -90,10 +95,10 @@
            </mat-form-field>
           <div>
             <mat-form-field style="width: 80px;">
-              <input  [disabled]="true" matInput placeholder="MIN" value="{{question.scale[0]}}">
+              <input  [disabled]="true" matInput placeholder="MIN" value="{{question.minVal}}">
            </mat-form-field>
           <mat-form-field style="width: 80px;">
-              <input  [disabled]="true" matInput placeholder="MAX" value="{{question.scale[1]}}">
+              <input  [disabled]="true" matInput placeholder="MAX" value="{{question.maxVal}}">
            </mat-form-field>
           </div>
         </span>

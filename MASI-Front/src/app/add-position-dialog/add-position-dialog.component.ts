@@ -4,6 +4,7 @@ import {UserDialogData} from '../edit-user-dialog/edit-user-dialog.component';
 
 export interface AddPositionDialogData {
   name: string;
+  description: string;
   active: boolean;
 }
 @Component({

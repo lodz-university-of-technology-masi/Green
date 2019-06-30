@@ -8,8 +8,11 @@ export interface EditQuestionData {
   version: number;
   type: string;
   description: string;
-  options?: [];
-  scale?: [];
+  option1?: string;
+  option2?: string;
+  option3?: string;
+  minVal?: number;
+  maxVal?: number;
 }
 
 @Component({

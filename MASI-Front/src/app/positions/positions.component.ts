@@ -16,16 +16,13 @@ export class POSITIONSComponent implements OnInit  {
 
   ngOnInit() {
     this.positionService.getAllPositions().subscribe(((positions: any) => {
-      this.positionList = positions.list;
-      console.log(this.positionList);
+      this.positionList = positions.response;
     }));
   }
   changeStatus(event, position) {
-    console.log(event.checked);
-    console.log(position.id);
-    this.positionService.editPosition({id: position.id, status: event.checked})
+    this.positionService.editPosition({id: position.id, active: event.checked})
       .subscribe((data: any) => {
-        if (data.Succeeded === true) {
+        if (data.message === 'OK') {
           this._snackBar.openFromComponent(ChangeStatusToast, {
             duration: 5 * 1000,
           });
@@ -39,7 +36,12 @@ export class POSITIONSComponent implements OnInit  {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.positionService.addPosition({name: result.name, active: result.active});
+      this.positionService.addPosition({name: result.name, description: result.description, active: result.active})
+        .subscribe(((we: any) => {
+          this.positionService.getAllPositions().subscribe(((positions: any) => {
+            this.positionList = positions.response;
+          }));
+        }));
     });
   }
 

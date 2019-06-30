@@ -3,10 +3,16 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import {FormControl} from '@angular/forms';
 
 export interface AddQuestionData {
+  id: number;
+  test: number;
+  version: number;
   type: string;
   description: string;
-  options?: [];
-  scale?: [];
+  option1?: string;
+  option2?: string;
+  option3?: string;
+  minVal?: number;
+  maxVal?: number;
 }
 
 

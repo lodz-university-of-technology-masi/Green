@@ -21,7 +21,7 @@ export class USERSComponent implements OnInit {
   ngOnInit() {
     this.editedUser.Id = '';
     this.modService.getAllUsers().subscribe((users: any) => {
-      this.userList = users.list;
+      this.userList = users.response;
       console.log(this.userList);
     });
   }
@@ -36,7 +36,12 @@ export class USERSComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.userService.editUser({name: result.name, role: result.role, email: result.email, id: user.id});
+      this.userService.editUser({name: result.name, role: result.role, email: result.email, id: user.id}).subscribe((a: any) => {
+        this.modService.getAllUsers().subscribe((users: any) => {
+          this.userList = users.response;
+          console.log(this.userList);
+        });
+      });
     });
   }
 }
