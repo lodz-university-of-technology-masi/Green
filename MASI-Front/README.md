@@ -7,7 +7,7 @@ Package Version @angular-devkit/architect 0.13.6,
 @schematics/update 0.13.6 rxjs 6.3.3, typescript 3.2.4,
 
 ikony z angular material,
-layout z wykorzystaniem Materializecss,
+layout z wykorzystaniem Angular Material,
 
 Aktualnie dodany został panel logowania i szablon strony głównej.
 odpalamy poprzez :

@@ -1,12 +1,13 @@
 package green.controller;
 
-import green.entity.Test;
 import green.manager.TestManager;
-import green.model.response.GetAllResponse;
-import io.swagger.annotations.ApiOperation;
+import green.model.request.CreateTestRequest;
+import green.model.request.EditTestRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.InputStream;
+
 
 @RestController
 public class TestController {
@@ -14,33 +15,19 @@ public class TestController {
     @Autowired
     TestManager testManager;
 
-    @ApiOperation(value="Get All Tests", consumes = "application/json")
-    @GetMapping(value = "api/test")
-    public ResponseEntity<GetAllResponse<Test>> getAllTests() {
-        return testManager.getAllTests();
+    @PostMapping(value = "api/test/add")
+    public String addTest(@RequestBody CreateTestRequest request) {
+        return testManager.addTest(request).toString();
     }
 
-    @ApiOperation(value="Get Test", consumes = "application/json")
-    @GetMapping(value = "api/test/{id}")
-    public ResponseEntity<Test> getTest(@PathVariable("id") Integer id) {
-        return testManager.getTest(id);
+    @GetMapping(value = "api/test/getAll")
+    public String getAllTests() {
+        return testManager.getAllTests().toString();
     }
 
-    @ApiOperation(value="Create Test", consumes = "application/json")
-    @PostMapping(value = "api/test")
-    public ResponseEntity<Test> createTest(@RequestBody Test test) {
-        return testManager.createTest(test);
+    @PutMapping(value = "api/test/edit")
+    public String editTest(@RequestBody EditTestRequest request) {
+        return testManager.editTest(request).toString();
     }
 
-    @ApiOperation(value="Update Test", consumes = "application/json")
-    @PutMapping(value = "api/test/{id}")
-    public ResponseEntity<Test> updateTest(@PathVariable("id") Integer id, @RequestBody Test test) {
-        return testManager.updateTest(test);
-    }
-
-    @ApiOperation(value="Delete Test", consumes = "application/json")
-    @DeleteMapping(value = "api/test/{id}")
-    public ResponseEntity<String> deleteTest(@PathVariable("id") Integer id) {
-        return testManager.deleteTest(id);
-    }
 }

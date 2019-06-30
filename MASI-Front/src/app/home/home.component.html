@@ -1,29 +1,21 @@
-<nav>
-  <div class="nav-wrapper teal lighten-2">
-    <a href="#!" class="brand-logo center">Jakaś zmyślna nazwa</a>
-    <ul class="right hide-on-med-and-down">
-      <li (click)="ShowHideProfileDetails()"><a><i class="material-icons right">person_outline</i>Profile</a></li>
-    </ul>
-  </div>
-</nav>
-
-<div *ngIf="showDetails" style=" z-index: 9999;position: absolute; right: 10px;">
-  <div class="col right">
-    <div class="card teal lighten-2">
-      <div class="card-content white-text">
-        <span class="card-title">Profile details</span>
-        <p>
-          <span>Username : {{userClaims.UserName}}</span>
-          <br>
-          <span>Email : {{userClaims.Email}}</span>
-          <br>
-          <span>Full Name : {{userClaims.FirstName}} {{userClaims.LastName}}</span>
-          <br>
-        </p>
-      </div>
-      <div class="card-action">
-        <a class="waves-effect waves-light btn teal lighten-3 darken-3" (click)="Logout()">logout</a>
-      </div>
-    </div>
+<div *ngIf="role == 'MOD'">
+  <div style="    margin-left: auto;margin-right: auto;width: 20em; margin-bottom: 20px">
+        <a mat-button routerLink='users' routerLinkActive='active' class="waves-effect waves-light btn homeButton">USERS</a>
+        <a mat-button routerLink='positions' routerLinkActive='active' class="waves-effect waves-light btn homeButton">POSITIONS</a>
+        <a mat-button routerLink='tests' routerLinkActive='active' class="waves-effect waves-light btn homeButton">TESTS</a>
   </div>
 </div>
+<div *ngIf="role == 'RED'">
+  <div style="    margin-left: auto;margin-right: auto;width: 20em; margin-bottom: 20px">
+    <a mat-button routerLink='tests' routerLinkActive='active' class="waves-effect waves-light btn homeButton">TESTS</a>
+  </div>
+</div>
+<div *ngIf="role == 'CAN'">
+  <div style="    margin-left: auto;margin-right: auto;width: 20em; margin-bottom: 20px">
+    <a mat-button routerLink='candidatePanel' routerLinkActive='active' class="waves-effect waves-light btn homeButton">TESTS</a>
+  </div>
+</div>
+<div>
+  <router-outlet></router-outlet>
+</div>
+

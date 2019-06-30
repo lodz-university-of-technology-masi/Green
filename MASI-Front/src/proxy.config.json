@@ -1,0 +1,8 @@
+{
+  "/api/*": {
+    "target": "http://212.191.92.88:6064",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  }
+}

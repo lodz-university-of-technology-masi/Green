@@ -12,12 +12,12 @@ import javax.transaction.Transactional;
 @Transactional
 public interface MemberRepository extends JpaRepository<Member, Integer> {
 
-	@Query("SELECT m FROM Member m WHERE m.login = :login AND m.password = :password")
-    Member findByLoginAndPassword(@Param("login") String login, @Param("password") String password);
-	
-	@Query("SELECT m FROM Member m WHERE m.login = :login")
-    Member findByLogin(@Param("login") String login);
+    @Query("SELECT m FROM Member m WHERE m.name = :name AND m.password = :password")
+    Member findByLoginAndPassword(@Param("name") String name, @Param("password") String password);
 
-	@Query("SELECT m FROM Member m WHERE m.id = :id")
-    Member findById(@Param("id") int id);
+    @Query("SELECT m FROM Member m WHERE m.name = :name")
+    Member findByLogin(@Param("name") String name);
+
+//    @Query("SELECT m FROM Member m WHERE m.id = :id")
+//    Member findById(@Param("id") int id);
 }

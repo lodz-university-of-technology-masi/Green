@@ -1,7 +1,8 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild, HostListener} from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from '../shared/user.service';
-
+import { HotkeysService, Hotkey } from 'angular2-hotkeys';
+import { MeasurementProvider } from '../shared/MeasurementProvider';
 
 @Component({
   selector: 'app-home',
@@ -13,16 +14,26 @@ export class HomeComponent implements OnInit {
   showDetails: boolean =  false;
   showPoiList: boolean =  false;
   poiList: any;
-  public constructor(private router: Router, private userService: UserService) {
+  role: any;
+  
+  public constructor(private router: Router, private userService: UserService, private _hotkeysService: HotkeysService, private _measurementProvider: MeasurementProvider) {
+    this._hotkeysService.add(new Hotkey('shift+d', (event: KeyboardEvent): boolean => {
+      var ret = this._measurementProvider.Measure();
+      if(ret)
+        alert(ret);
+      return false;
+    }));
+    this._hotkeysService.add(new Hotkey('shift+w', (event: KeyboardEvent): boolean => {
+      alert("Measuring canceled");
+      this._measurementProvider.MeasureCancel;
+      return false;
+    }));
   }
   ngOnInit() {
-    this.userService.getUserClaims().subscribe((data: any) => {
-      this.userClaims = data;
-    });
-  }
+    if (localStorage.getItem('role') !== '') {
+      this.role = localStorage.getItem(('role'));
 
-  ShowHideProfileDetails() {
-    this.showDetails = !this.showDetails;
+    }
   }
   ShowHidePoiList() {
     this.showPoiList = !this.showPoiList;
@@ -33,5 +44,8 @@ export class HomeComponent implements OnInit {
     this.router.navigate(['/login']);
   }
 
-
+  @HostListener('document:click', ['$event'])
+    documentClick(event: MouseEvent) {
+        this._measurementProvider.Clicked();
+    }
 }

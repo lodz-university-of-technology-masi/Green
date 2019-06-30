@@ -1,49 +1,100 @@
 package green.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
 import java.io.Serializable;
 import java.util.List;
 
-@NoArgsConstructor
-@Data
 @Entity
-@Table(name="member")
-@NamedQuery(name="Member.findAll", query="SELECT a FROM Member a")
+@Table(name = "member")
+//@NamedQuery(name = "Member.findAll", query = "SELECT a FROM Member a")
 public class Member implements Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Integer id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
-	private Boolean active;
+    @Column(name="name")
+    private String name;
 
-	private String login;
+    @Column(name="password")
+    private String password;
 
-	private String name;
+    @Column(name="email")
+    private String email;
 
-	@JsonIgnore
-	private String password;
+    @Column(name="language")
+    private String language;
 
-	private Role role;
+    @Column(name="role")
+    private String role;
 
-	@OneToMany(mappedBy="member")
-	private List<Session> sessions;
 
-	public Session addSession(Session session) {
-		getSessions().add(session);
-		session.setMember(this);
-		return session;
-	}
 
-	public Session removeSession(Session session) {
-		getSessions().remove(session);
-		session.setMember(null);
-		return session;
-	}
+    public Member() {
+    }
 
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
+    }
 }
